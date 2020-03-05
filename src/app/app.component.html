@@ -1,0 +1,50 @@
+<table>
+  <thead>
+    <th>Business Id</th>
+    <th>Business Name</th>
+    <th>Title</th>
+    <th>Picture</th>
+    <th>Session Date</th>
+    <th>List Price</th>
+    <th>Discounted Price</th>
+    <th>Count</th>
+    <th></th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let class of classes">
+      <td>{{class.businessId}}</td>
+      <td>{{class.businessName}}</td>
+      <td>{{class.title}}</td>
+      <td><img [src]="class.pictureUrl" alt="image"></td>
+      <td>{{class.sessionDate}}</td>
+      <td>{{class.listPrice}}</td>
+      <td>{{class.discountedPrice}}</td>
+      <td [tooltip]="class.description">{{class.count || 0}}</td>
+      <td><button (click)="openModal(template,class)">Edit Participant</button></td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{currentParticipant.businessName}} {{currentParticipant.businessId}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="save()">
+      <div class="form-group">
+        <label for="count">Participant count</label>
+        <input [(ngModel)]="currentParticipant.count" type="text" name="count" class="form-control" id="count">
+        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+      </div>
+      <div class="form-group">
+        <label for="description">Participant Description</label>
+        <textarea [(ngModel)]="currentParticipant.description" class="form-control" name="description" id="description"
+          rows="5"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+  </div>
+</ng-template>
